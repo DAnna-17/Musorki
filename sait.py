@@ -3,17 +3,18 @@ from main import func1
 import sqlite3
 
 app = Flask(__name__)
+app.config['JSON_AS_ASCII'] = False
 
 @app.route('/map', methods=['POST', 'GET'])
 def form_sample():
     if request.method == 'GET':
-        with open('form.html') as f:
+        with open('form.html', encoding="utf-8") as f:
             return f.read()
     if request.method == 'POST':
         print(request.form['legal'])
         print(request.form['type'])
         func1( request.form['type'], request.form['legal'])
-        with open('form.html') as f:
+        with open('form.html', encoding="utf-8") as f:
             return f.read()
 
 @app.route('/caba', methods=['POST', 'GET'])
@@ -48,29 +49,41 @@ def caba():
                                                                       request.form["leg"], request.form["area"])).fetchall()
         con.commit()
         con.close()
-        with open('cab_adm.html') as f:
+        if (request.form['type']) == 'y':
+            con = sqlite3.connect("static//base//dump.db")
+            cur = con.cursor()
+            n = len(cur.execute('DELETE FROM orders WHERE id = ?;', (request.form['id'])).fetchall()) + 1
+            con.commit()
+            con.close()
+
+        with open('cab_adm.html', encoding="utf-8") as f:
             return f.read()
 
 @app.route('/cabu', methods=['POST', 'GET'])
 def cabu():
     if request.method == 'GET':
-        with open('cab_us.html') as f:
+        with open('cab_us.html', encoding="utf-8") as f:
             return f.read()
     if request.method == 'POST':
         con = sqlite3.connect("static//base//admin.db")
         cur = con.cursor()
-        cur.execute("INSERT INTO orders VALUES (?, ?, ?, ?)", (request.form["coord"], request.form["resp_org"],
-                                                            request.form["area"], request.form["tel"])).fetchall()
+        n = len(cur.execute("SELECT id FROM orders").fetchall()) + 1
+        con.commit()
+
+        con = sqlite3.connect("static//base//admin.db")
+        cur = con.cursor()
+        cur.execute("INSERT INTO orders VALUES (?, ?, ?, ?, ?, ?)", (n, request.form["coord"], request.form["resp_org"],
+                                                                     request.form["area"], request.form["tel"], request.form["log"])).fetchall()
         con.commit()
         con.close()
         print(11111111111111)
-        with open('cab_us.html') as f:
+        with open('cab_us.html', encoding="utf-8") as f:
             return f.read()
 
 @app.route('/reg', methods=['POST', 'GET'])
 def reg():
     if request.method == 'GET':
-        with open('form1.html') as f:
+        with open('form1.html', encoding="utf-8") as f:
             return f.read()
     if request.method == 'POST':
         con = sqlite3.connect("static//base//admin.db")
@@ -105,7 +118,8 @@ def reg():
             cur.execute("INSERT INTO users VALUES (?, ?, 0)", (request.form["email"], str(request.form["password"]))).fetchall()
             con.commit()
             con.close()
-            return "запись добавлена"
+            with open('form1.html', encoding="utf-8") as f:
+                return f.read()
 
 
 
