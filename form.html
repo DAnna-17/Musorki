@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head><title>qqqqq</title>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html";/>
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=40d1649f-0493-4b70-98ba-98533de7710b" type="text/javascript"></script>
+    <script src="static//js//placemark.js" type="text/javascript"></script>
+
+	<link rel="stylesheet" type="text/css" href="static//css//style1.css">
+
+	<style>
+
+		html, body{
+            width: 100%;
+			height: 100%;
+		}
+
+        #map {
+            width: 80%;
+			height: 90%;
+        }
+    </style>
+</head>
+<body>
+
+	<div id="header">
+	<h1>Карта</h1>
+		<a href=reg><button class=grey style="height:40px;width:70px">Карта</button></a>
+	</div>
+
+	<div id="rbar">
+		<form class="login_form" method="post">
+            <div class="form-group">
+                <label for="classSelect">В каком вы классе</label>
+                <select class="form-control" id="classSelect" name="legal">
+                    <option>0</option>
+                    <option>1</option>
+                    <option>все равно</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="form-check">Укажите пол</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="type" id="r" value="r" checked>
+                    <label class="form-check-label" for="r">
+                        все равно
+                    </label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="type" id="r1" value="r1" checked>
+                    <label class="form-check-label" for="r1">
+                        1-10000
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="type" id="r2" value="r2">
+                    <label class="form-check-label" for="r2">
+                        100000-1000000
+                    </label>
+                </div>
+
+            </div>
+            <button type="submit" class="btn btn-primary">Записаться</button>
+        </form>
+    </div>
+	<h2 class = 'center'>lbar</h2>
+
+	</div>
+
+	<div id="map" class = 'lbar'></div>
+
+	<div id="footer">
+		<p>Проект Пузановой Ксении и Щукиной Анны</p>
+	</div>
+
+</body>
+</html>
+
+
+
